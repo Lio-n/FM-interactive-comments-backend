@@ -1,3 +1,4 @@
+import { isEqual } from "lodash";
 import { Comment } from "../../models";
 import { CreateCommentParams } from "../../types/global";
 import { isAValidArray } from "../../validations";
@@ -67,21 +68,18 @@ const replyComment = async ({ content, userId, commentId }) => {
   return true;
 };
 
-export { replyComment, createComment, getAllComments, getCommentById };
-/* const removeComment = async ({
-  userId,
-  post_id,
-}: {
-  userId: string;
-  post_id: string;
-}): Promise<void> => {
-  try {
-    const comment = new Comment(post_id);
-    await comment.removeComment(userId);
-  } catch (err) {
-    throw err;
-  }
+const removeComment = async ({ userId, commentId }: { userId: number; commentId: number }) => {
+  const comment = await Comment.verificateIfExists(commentId);
+  const posted_by = comment.getDataValue("posted_by");
+  if (!isEqual(posted_by, userId)) throw "This comment is not your property";
+
+  await comment.update({
+    isEnable: false,
+    full_name: null,
+    avatar_picture: null,
+    content: null,
+    score: null,
+  });
 };
 
-export { getComments, createComment, removeComment };
- */
+export { replyComment, createComment, getAllComments, getCommentById, removeComment };

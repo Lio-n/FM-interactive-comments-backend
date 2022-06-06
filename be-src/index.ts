@@ -8,7 +8,7 @@ import { postAuth } from "./routes/auth";
 import { postToken } from "./routes/auth/token";
 import { authMiddleware } from "./middleware/token";
 import { getMe, patchMe } from "./routes/me";
-import { getComment, getOneComment, postComment } from "./routes/comments";
+import { deleteComment, getComment, getOneComment, postComment } from "./routes/comments";
 import { postCommentReply } from "./routes/comments/reply";
 
 const app = express();
@@ -83,6 +83,14 @@ app.post("/comments", authMiddleware, postComment);
   # recibe 'userId' y 'comment_id' para replicar un comentario
 */
 app.post("/comments/:commentId/reply", authMiddleware, postCommentReply);
+
+/* 
+  ! Endpoint Seguro
+  $ DELETE /comments/{comment_id}
+  # Elimina un comentario, pero si este tiene "Replicas" no se las elimina.
+  # recibe 'token' y 'comment_id' para eliminar un comentario.
+*/
+app.delete("/comments/:commentId", authMiddleware, deleteComment);
 
 // app.get("*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "../fe-dist/index.html"));

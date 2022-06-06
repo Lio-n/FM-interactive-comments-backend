@@ -1,6 +1,7 @@
 import * as yup from "yup";
 import { sendCode } from "../../controllers";
 
+// $ POST /auth
 const bodySchema = yup.object().shape({ email: yup.string().lowercase().trim().required() });
 const postAuth = async (req, res) => {
   try {

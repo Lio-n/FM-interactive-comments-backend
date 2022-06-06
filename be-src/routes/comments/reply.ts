@@ -2,6 +2,10 @@ import * as yup from "yup";
 import { replyComment } from "../../controllers/comment";
 import { validateSchema } from "../../validations/yup";
 
+/* 
+  ! Endpoint Seguro
+  $ POST /comments/{comment_id}/reply
+*/
 const bodySchema = yup.object().shape({
   content: yup.string().max(255).required(),
 });

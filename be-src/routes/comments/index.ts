@@ -1,8 +1,9 @@
 import * as yup from "yup";
 import { createComment, getAllComments } from "../../controllers";
-import { getCommentById } from "../../controllers/comment";
+import { getCommentById, removeComment } from "../../controllers";
 import { validateSchema } from "../../validations/yup";
 
+// $ GET /comments
 const getComment = async (req, res) => {
   try {
     const comments = await getAllComments();
@@ -12,6 +13,7 @@ const getComment = async (req, res) => {
   }
 };
 
+// $ GET /comments/{comment_id}
 const getOneComment = async (req, res) => {
   try {
     const { commentId } = req.params;
@@ -24,6 +26,10 @@ const getOneComment = async (req, res) => {
   }
 };
 
+/* 
+  ! Endpoint Seguro
+  $ POST /comments
+*/
 const bodySchema = yup.object().shape({
   content: yup.string().max(255).required(),
 });
@@ -38,4 +44,22 @@ const postComment = async (req, res) => {
   }
 };
 
-export { postComment, getComment, getOneComment };
+/* 
+  ! Endpoint Seguro
+  $ DELETE /comments/{comment_id}
+*/
+const deleteComment = async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    if (!commentId) throw "comment_id is required";
+    const userId = req._userId;
+
+    await removeComment({ userId, commentId });
+
+    res.status(200).json({ isRemoved: true });
+  } catch (err) {
+    res.status(404).json({ err });
+  }
+};
+
+export { postComment, getComment, getOneComment, deleteComment };

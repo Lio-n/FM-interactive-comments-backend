@@ -2,10 +2,7 @@ import * as yup from "yup";
 import { getUserData, updateUserData } from "../../controllers";
 import { validateSchema } from "../../validations/yup";
 
-/*  
-  $ GET /me
-  # Devuelve info del user asociado a ese token
-*/
+// $ GET /me
 const getMe = async (req, res) => {
   try {
     const userId: number = req._userId;
@@ -29,10 +26,8 @@ const bodySchema = yup
   })
   .noUnknown(true)
   .strict();
-/*  
-  $ PATCH /me
-  # Permite modificar algunos datos del usuario al que pertenezca el token.
-*/
+
+// $ PATCH /me
 const patchMe = async (req, res) => {
   try {
     const data = await validateSchema({ schema: bodySchema, request: req.body });

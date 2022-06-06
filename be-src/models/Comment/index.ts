@@ -23,7 +23,7 @@ class Comment extends Model {
     // # 'commentBase' : representa la estructura de cada Comment
     const commentBase: CommentData = {
       isEnable: true,
-      isReply: false, // isReply ? es una replica : es un comentario "principal"
+      isReply: false, // isReply ? es una respuesta : es un comentario "principal"
       posted_by: userId,
       full_name: user.getDataValue("full_name"),
       avatar_picture: user.getDataValue("avatar_picture"),

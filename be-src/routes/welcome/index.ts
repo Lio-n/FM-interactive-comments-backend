@@ -1,3 +1,4 @@
+// $ Welcome.
 const getWelcome = (req, res) => {
   try {
     res.status(200).json("Bienvenido ヾ(●ω●)ノ");
