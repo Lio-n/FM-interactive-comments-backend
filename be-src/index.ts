@@ -55,12 +55,14 @@ app.get("/comments/:commentId", getOneComment);
 // ! Below here need a TOKEN : Authorization: `bearer ${TOKEN}`
 
 /* 
+  ! Endpoint Seguro
   $ GET /me
   # Devuelve info del user asociado a ese token
 */
 app.get("/me", authMiddleware, getMe);
 
 /* 
+  ! Endpoint Seguro
   $ PATCH /me
   # Permite modificar algunos datos del usuario al que pertenezca el token.
 */

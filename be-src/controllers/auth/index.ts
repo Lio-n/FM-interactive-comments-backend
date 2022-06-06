@@ -16,12 +16,10 @@ const sendCode = async (email: string): Promise<{ message }> => {
 };
 
 const findOrCreateAuth = async (email: string): Promise<Auth> => {
-  const cleanEmail = Auth.cleanEmail(email);
-
-  const auth = await Auth.findOne({ where: { email: cleanEmail } });
+  const auth = await Auth.findOne({ where: { email } });
   if (auth) return auth;
 
-  return await createAuthAndUser(cleanEmail);
+  return await createAuthAndUser(email);
 };
 
 const createAuthAndUser = async (email: string): Promise<Auth> => {

@@ -1,48 +1,10 @@
-/* import { firestore } from "lib";
-import Base from "models/base_class";
-import { User } from "models";
-
-const coll = firestore.collection("comment");
-class Comment extends Base {
-  constructor(id: string) {
-    super({ id, ref: coll.doc(id) });
-  }
-  async removeComment(userId: string) {
+/*   async removeComment(userId: string) {
     await this.pull();
     if (this.data.posted_by !== userId) throw "Este post no es propiedad de este user";
 
     this.data.isEnable = false;
     this.push();
   }
-  static async getComments(): Promise<CommentData[]> {
-    const snapshot = await coll.get();
-    const comments = await snapshot.docs.map((doc) => doc.data());
-    return comments as CommentData[];
-  }
-  static async createNewComment({ userId, content }: { userId: string; content: string }) {
-    const user = new User(userId);
-    await user.exists();
-    await user.pull();
-    // * 'commentBase' : representa la estructura de cada Comment
-    const commentBase: CommentData = {
-      isEnable: true,
-      posted_by: userId,
-      full_name: user.data.full_name,
-      avatar_picture: user.data.avatar_picture,
-      content,
-      score: 0,
-      reply: null,
-      created_at: new Date(),
-    };
-    const { id } = await coll.add(commentBase);
-    // * El span no contiene la data solo el Id.
-    user.setNewComment(id);
-
-    return id;
-  }
-}
-
-export default Comment;
  */
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../../config";
@@ -58,7 +20,7 @@ class Comment extends Model {
   static async createNewComment({ userId, content }: CreateCommentParams): Promise<Comment> {
     const user = await User.findByPk(userId);
 
-    // * 'commentBase' : representa la estructura de cada Comment
+    // # 'commentBase' : representa la estructura de cada Comment
     const commentBase: CommentData = {
       isEnable: true,
       isReply: false, // isReply ? es una replica : es un comentario "principal"

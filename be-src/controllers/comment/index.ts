@@ -2,10 +2,9 @@ import { Comment } from "../../models";
 import { CreateCommentParams } from "../../types/global";
 import { isAValidArray } from "../../validations";
 
-const getCommentById = async (comment_id) => {
-  return await Comment.verificateIfExists(comment_id);
-};
-const getComments = async (): Promise<Comment[]> => {
+const getCommentById = async (comment_id) => await Comment.verificateIfExists(comment_id);
+
+const getAllComments = async (): Promise<Comment[]> => {
   const promiseMain = await Comment.findAll({ where: { isReply: false } });
   const promiseReplies = await Comment.findAll({ where: { isReply: true } });
 
@@ -68,7 +67,7 @@ const replyComment = async ({ content, userId, commentId }) => {
   return true;
 };
 
-export { replyComment, createComment, getComments, getCommentById };
+export { replyComment, createComment, getAllComments, getCommentById };
 /* const removeComment = async ({
   userId,
   post_id,

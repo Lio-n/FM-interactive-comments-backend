@@ -5,10 +5,6 @@ import { isCodeExpired } from "../../lib";
 import { AuthData } from "../../types/global";
 
 class Auth extends Model {
-  static cleanEmail = (email: string): string => {
-    return email.trim().toLocaleLowerCase();
-  };
-
   validateCode(code: number): void {
     const authCode = this.getDataValue("code");
     const authExpires = this.getDataValue("expires");
@@ -16,7 +12,7 @@ class Auth extends Model {
     if (!isEqual(authCode, code)) throw "El codigo no es valido";
     if (isCodeExpired(authExpires)) throw "El tiempo ha expirado";
 
-    // this.update({ code: null }); // * Invalida el codigo
+    this.update({ code: null }); // * Invalida el codigo
   }
 
   static async createNewAuth({ userId, email }): Promise<Auth> {

@@ -1,11 +1,11 @@
 import * as yup from "yup";
-import { createComment, getComments } from "../../controllers";
+import { createComment, getAllComments } from "../../controllers";
 import { getCommentById } from "../../controllers/comment";
 import { validateSchema } from "../../validations/yup";
 
 const getComment = async (req, res) => {
   try {
-    const comments = await getComments();
+    const comments = await getAllComments();
     res.status(200).json({ comments });
   } catch (err) {
     res.status(400).json({ message: err });
