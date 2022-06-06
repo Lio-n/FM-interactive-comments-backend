@@ -30,7 +30,7 @@ type CommentData = {
   full_name: string;
   avatar_picture: string; // url : base64
   score: number;
-  reply: number; // Almacena un solo id de la Tabla Reply
+  replies: number[]; // Almacena un solo id de la Tabla Reply
   created_at: Date;
 };
 

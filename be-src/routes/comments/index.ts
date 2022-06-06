@@ -1,11 +1,24 @@
 import * as yup from "yup";
 import { createComment, getComments } from "../../controllers";
+import { getCommentById } from "../../controllers/comment";
 import { validateSchema } from "../../validations/yup";
 
 const getComment = async (req, res) => {
   try {
     const comments = await getComments();
     res.status(200).json({ comments });
+  } catch (err) {
+    res.status(400).json({ message: err });
+  }
+};
+
+const getOneComment = async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    if (!commentId) throw "comment_id is required";
+
+    const comment = await getCommentById(commentId);
+    res.status(200).json({ comment });
   } catch (err) {
     res.status(400).json({ message: err });
   }
@@ -25,4 +38,4 @@ const postComment = async (req, res) => {
   }
 };
 
-export { postComment, getComment };
+export { postComment, getComment, getOneComment };

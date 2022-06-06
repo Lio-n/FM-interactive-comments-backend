@@ -67,7 +67,7 @@ class Comment extends Model {
       avatar_picture: user.getDataValue("avatar_picture"),
       content,
       score: 0,
-      reply: null,
+      replies: [],
       created_at: new Date(),
     };
 
@@ -85,7 +85,7 @@ Comment.init(
     avatar_picture: DataTypes.TEXT,
     content: DataTypes.TEXT,
     score: DataTypes.INTEGER,
-    reply: DataTypes.INTEGER,
+    replies: DataTypes.ARRAY(DataTypes.INTEGER),
     created_at: DataTypes.DATE,
   },
   {

@@ -8,7 +8,7 @@ import { postAuth } from "./routes/auth";
 import { postToken } from "./routes/auth/token";
 import { authMiddleware } from "./middleware/token";
 import { getMe, patchMe } from "./routes/me";
-import { getComment, postComment } from "./routes/comments";
+import { getComment, getOneComment, postComment } from "./routes/comments";
 import { postCommentReply } from "./routes/comments/reply";
 
 const app = express();
@@ -44,6 +44,13 @@ app.post("/auth/token", postToken);
   # Retorna todos los commentarios realizados
 */
 app.get("/comments", getComment);
+
+/* 
+  $ GET /comments/{comment_id}
+  # Recupera un comentario.
+  # recibe 'comment_id' para recuperar un comentario
+*/
+app.get("/comments/:commentId", getOneComment);
 
 // ! Below here need a TOKEN : Authorization: `bearer ${TOKEN}`
 
