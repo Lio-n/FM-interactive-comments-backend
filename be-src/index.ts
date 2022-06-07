@@ -3,13 +3,22 @@ import "dotenv/config";
 import * as path from "path";
 import * as express from "express";
 import * as cors from "cors";
+import { authMiddleware } from "./middleware/token";
+
+// $ Routes
 import { getWelcome } from "./routes/welcome";
 import { postAuth } from "./routes/auth";
 import { postToken } from "./routes/auth/token";
-import { authMiddleware } from "./middleware/token";
 import { getMe, patchMe } from "./routes/me";
-import { deleteComment, getComment, getOneComment, postComment } from "./routes/comments";
-import { postCommentReply } from "./routes/comments/reply";
+import {
+  postCommentReply,
+  deleteComment,
+  getComment,
+  getOneComment,
+  postComment,
+  patchCommentContent,
+  patchCommentScore,
+} from "./routes/comments/";
 
 const app = express();
 
@@ -46,9 +55,9 @@ app.post("/auth/token", postToken);
 app.get("/comments", getComment);
 
 /* 
-  $ GET /comments/{comment_id}
+  $ GET /comments/{commentId}
   # Recupera un comentario.
-  # recibe 'comment_id' para recuperar un comentario
+  # recibe 'commentId' para recuperar un comentario
 */
 app.get("/comments/:commentId", getOneComment);
 
@@ -72,25 +81,41 @@ app.patch("/me", authMiddleware, patchMe);
   ! Endpoint Seguro
   $ POST /comments
   # Crea un comentario.
-  # recibe 'userId' y el campo 'content' para crea un comentario
+  # recibe token y el campo 'content' para crea un comentario
 */
 app.post("/comments", authMiddleware, postComment);
 
 /* 
   ! Endpoint Seguro
-  $ POST /comments/{comment_id}/reply
+  $ POST /comments/{commentId}/reply
   # Replica un comentario.
-  # recibe 'userId' y 'comment_id' para replicar un comentario
+  # recibe token y 'commentId' para replicar un comentario
 */
 app.post("/comments/:commentId/reply", authMiddleware, postCommentReply);
 
 /* 
   ! Endpoint Seguro
-  $ DELETE /comments/{comment_id}
+  $ DELETE /comments/{commentId}
   # Elimina un comentario, pero si este tiene "Replicas" no se las elimina.
-  # recibe 'token' y 'comment_id' para eliminar un comentario.
+  # recibe 'token' y 'commentId' para eliminar un comentario.
 */
 app.delete("/comments/:commentId", authMiddleware, deleteComment);
+
+/* 
+  ! Endpoint Seguro
+  $ PATCH /comments/{commentId}/update
+  # Edita un comentario propio.
+  # recibe 'token', 'commentId' y 'content' para editar comentario.
+*/
+app.patch("/comments/:commentId/update", authMiddleware, patchCommentContent);
+
+/* 
+  ! Endpoint Seguro
+  $ PATCH /comments/{commentId}/vote?vote=upvote | downvote
+  # Edita el score de un comentario.
+  # recibe 'token', 'commentId' y 'score' para editar el score de un comentario.
+*/
+app.patch("/comments/:commentId/vote", authMiddleware, patchCommentScore);
 
 // app.get("*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "../fe-dist/index.html"));

@@ -43,5 +43,20 @@ type CreateCommentParams = {
   userId: number;
   content: string;
 };
+type ReplyCommentParams = CreateCommentParams & { commentId: number };
+type UpdateCommentParams = ReplyCommentParams;
+type RemoveCommentParams = Omit<ReplyCommentParams, "content">;
+type UpdateScoreParams = Pick<ReplyCommentParams, "commentId"> & { vote: boolean };
 
-export { CustomEndpoint, UserData, AuthData, CommentData, ReplyData, CreateCommentParams };
+export {
+  CustomEndpoint,
+  UserData,
+  AuthData,
+  CommentData,
+  ReplyData,
+  CreateCommentParams,
+  ReplyCommentParams,
+  RemoveCommentParams,
+  UpdateCommentParams,
+  UpdateScoreParams,
+};
