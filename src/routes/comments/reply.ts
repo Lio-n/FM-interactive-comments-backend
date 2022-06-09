@@ -21,4 +21,4 @@ const postCommentReply = async (req, res) => {
   }
 };
 
-export { postCommentReply };
+export { postCommentReply as replyComment };

@@ -1,9 +1,10 @@
 {
-  "name": "interactive_comment_section",
+  "name": "int_comment_sect-backend",
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
     "@sendgrid/mail": "^7.6.1",
+    "@types/node": "^17.0.41",
     "cors": "^2.8.5",
     "date-fns": "^2.28.0",
     "dotenv": "^16.0.0",
@@ -22,12 +23,9 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "dev:be": "nodemon --watch './be-src/index.ts' --exec 'ts-node ./be-src/index.ts'",
-    "dev:fe": "parcel serve ./fe-src/index.html",
-    "sync": "ts-node ./be-src/sync.ts",
-    "build:be": "tsc",
-    "build:fe": "parcel build ./fe-src/index.html --dist-dir fe-dist",
-    "build": "npm run build:fe && npm run build:be",
-    "start": "node ./be-dist/index.js"
+    "dev": "nodemon --watch './src/index.ts' --exec 'ts-node ./src/index.ts'",
+    "sync": "ts-node ./src/sync.ts",
+    "build": "tsc",
+    "start": "node ./dist/index.js"
   }
 }

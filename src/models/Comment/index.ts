@@ -1,11 +1,3 @@
-/*   async removeComment(userId: string) {
-    await this.pull();
-    if (this.data.posted_by !== userId) throw "Este post no es propiedad de este user";
-
-    this.data.isEnable = false;
-    this.push();
-  }
- */
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../../config";
 import { CommentData, CreateCommentParams } from "../../types/global";

@@ -2,4 +2,5 @@
 node_modules
 yarn.lock
 .env
-/be-src/pages
+be-dist
+dist

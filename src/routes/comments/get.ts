@@ -2,7 +2,7 @@ import { getAllComments, getCommentById } from "../../controllers";
 import { validateCommentId } from "../../validations/yup";
 
 // $ GET /comments
-const getComment = async (req, res) => {
+const getComments = async (req, res) => {
   try {
     const comments = await getAllComments();
     res.status(200).json({ comments });
@@ -23,4 +23,4 @@ const getOneComment = async (req, res) => {
   }
 };
 
-export { getComment, getOneComment };
+export { getComments, getOneComment };

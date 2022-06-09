@@ -17,4 +17,4 @@ const postComment = async (req, res) => {
   }
 };
 
-export { postComment };
+export { postComment as createComment };

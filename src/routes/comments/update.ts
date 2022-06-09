@@ -40,4 +40,4 @@ const patchCommentScore = async (req, res) => {
   }
 };
 
-export { patchCommentContent, patchCommentScore };
+export { patchCommentContent as updateContent, patchCommentScore as updateScore };
